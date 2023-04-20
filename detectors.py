@@ -114,6 +114,9 @@ def MultiScaleCornerDetect(I, sigma, r, k, theta_corn, s, N):
                 nextLog = LoG[i+1][x, y]
             if ((currentLog > previousLog) & (currentLog > nextLog)):
                 final_corners.append([y, x, sigma_arr[i]])
+
+    final_corners = np.array(final_corners) 
+    
     return final_corners
 
 def BlobDetect(I, sigma, r, k, theta_corn):
@@ -158,7 +161,7 @@ def MultiScaleBlobDetect(I, sigma, r, k, theta_corn, s, N):
     rho_arr = []
     corners = []
     LoG = []
-    final_corners = []
+    final_blobs = []
     
     I = I.astype(float)/255
 
@@ -190,5 +193,8 @@ def MultiScaleBlobDetect(I, sigma, r, k, theta_corn, s, N):
                 previousLog = LoG[i-1][x, y]
                 nextLog = LoG[i+1][x, y]
             if ((currentLog > previousLog) & (currentLog > nextLog)):
-                final_corners.append([y, x, sigma_arr[i]])
-    return final_corners
+                final_blobs.append([y, x, sigma_arr[i]])
+    
+    final_blobs = np.array(final_blobs)  # convert list to numpy array
+    
+    return final_blobs
